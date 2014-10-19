@@ -12,10 +12,11 @@
   :source-paths ["src"]
 
   :cljsbuild {
-    :builds [{:id "ref-cursor"
-              :source-paths ["src"]
-              :compiler {
-                :output-to "ref_cursor.js"
-                :output-dir "out"
-                :optimizations :none
-                :source-map true}}]})
+              :builds [{:id "release"
+                        :source-paths ["src"]
+                        :compiler {
+                                   :output-to "main.js"
+                                   :optimizations :advanced
+                                   :pretty-print false
+                                   :preamble ["react/react.min.js"]
+                                   :externs ["react/externs/react.js"]}}]})

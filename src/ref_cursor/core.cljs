@@ -7,16 +7,16 @@
 (enable-console-print!)
 
 (def message-source ["Across the Universe" "Act Naturally" "Ask Me Why" "Back in the U.S.S.R"
-                   "Because" "Blackbird" "Carry That Weight" "A Day in the Life" "Day Tripper"
-                   "Don't Let Me Down" "Drive My Car" "Eleanor Rigby" "The End" "Fixing a Hole"
-                   "Get Back" "Help!" "Helter Skelter" "Her Majesty" "Hey Jude" "I Am the Walrus"
-                   "I Saw Her Standing There" "I Should Have Known Better" "It Won't Be Long"
-                   "I've Just Seen a Face" "Let It Be" "Maxwell's Silver Hammer" "Money"
-                   "Norwegian Wood" "Paperback Writer" "Polythene Pam" "Revolution"
-                   "She Came In Through the Bathroom Window" "Taxman" "Tell Me Why"
-                   "Ticket to Ride" "We Can Work It Out" "When I'm Sixty-Four"
-                   "With a Little Help from My Friends" "Yellow Submarine" "Yesterday"
-                   "You Won't See Me" "You've Got to Hide Your Love Away"])
+                     "Because" "Blackbird" "Carry That Weight" "A Day in the Life" "Day Tripper"
+                     "Don't Let Me Down" "Drive My Car" "Eleanor Rigby" "The End" "Fixing a Hole"
+                     "Get Back" "Help!" "Helter Skelter" "Her Majesty" "Hey Jude" "I Am the Walrus"
+                     "I Saw Her Standing There" "I Should Have Known Better" "It Won't Be Long"
+                     "I've Just Seen a Face" "Let It Be" "Maxwell's Silver Hammer" "Money"
+                     "Norwegian Wood" "Paperback Writer" "Polythene Pam" "Revolution"
+                     "She Came In Through the Bathroom Window" "Taxman" "Tell Me Why"
+                     "Ticket to Ride" "We Can Work It Out" "When I'm Sixty-Four"
+                     "With a Little Help from My Friends" "Yellow Submarine" "Yesterday"
+                     "You Won't See Me" "You've Got to Hide Your Love Away"])
 
 (defonce app-state (atom {:messages []
                           :members [{:name "John" :instrument :guitar}
@@ -38,7 +38,9 @@
   (reify
     om/IRender
     (render [_]
-      (let [xs (reverse (filter #(= (:sender %) (:name app))  (om/observe owner (messages))))]
+      (let [xs (->> (om/observe owner (messages))
+                    (filter #(= (:sender %) (:name app)))
+                    reverse)]
         (dom/div #js {:className "col-xs-3 panel panel-warning msg-log"}
                  (dom/h4 #js {:className "panel-heading"}
                          (str (:name app) " " (:instrument app)))
